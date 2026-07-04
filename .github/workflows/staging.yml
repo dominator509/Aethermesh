@@ -1,0 +1,46 @@
+# AetherMesh Staging Workflow — nightly smoke
+# EP-009 M5. Spins up docker-compose, runs smoke, tears down.
+
+name: Staging
+
+on:
+  schedule:
+    - cron: "13 6 * * *"
+  workflow_dispatch:
+
+jobs:
+  staging-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: uv sync --all-extras --dev --frozen
+      - name: Build and start staging
+        run: |
+          docker compose -f ops/staging/docker-compose.yml build
+          docker compose -f ops/staging/docker-compose.yml up -d
+      - name: Wait for health
+        run: |
+          expected=7
+          for i in $(seq 1 30); do
+            healthy="$(docker compose -f ops/staging/docker-compose.yml ps | grep -c "(healthy)" || true)"
+            if [ "$healthy" -eq "$expected" ]; then
+              echo "All services healthy: $healthy/$expected"
+              exit 0
+            fi
+            echo "Waiting for services: $healthy/$expected healthy"
+            sleep 2
+          done
+          echo "Timeout waiting for services"
+          docker compose -f ops/staging/docker-compose.yml logs
+          exit 1
+      - name: Smoke test
+        run: ./scripts/smoke-test.sh
+      - name: Teardown
+        if: always()
+        run: docker compose -f ops/staging/docker-compose.yml down -v

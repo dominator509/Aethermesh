@@ -1,0 +1,24 @@
+# AetherMesh Gateway — multi-stage uv build
+# EP-009 M2. Per DEPLOYMENT.md.
+
+# ── Build stage ──
+FROM python:3.11-slim AS builder
+RUN pip install uv
+WORKDIR /build
+COPY pyproject.toml uv.lock README.md ./
+COPY aethermesh/ aethermesh/
+RUN uv sync --no-dev --frozen --python-preference only-system
+
+# ── Runtime stage ──
+FROM python:3.11-slim
+LABEL org.opencontainers.image.title="aethermesh-gateway"
+LABEL org.opencontainers.image.description="AetherMesh Gateway (entry/exit)"
+WORKDIR /build
+COPY --from=builder /build/.venv /build/.venv
+COPY --from=builder /build/aethermesh /build/aethermesh
+ENV PATH="/build/.venv/bin:$PATH"
+ENV AEP_PQ_BACKEND=liboqs
+ENV AEP_NODE_ROLE=gateway-entry
+EXPOSE 4040/udp 9100/tcp
+HEALTHCHECK --interval=30s --timeout=5s CMD aethermesh node health --endpoint http://127.0.0.1:9100
+ENTRYPOINT ["sh", "-c", "exec aethermesh node start --role \"$AEP_NODE_ROLE\""]

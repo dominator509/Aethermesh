@@ -1,0 +1,120 @@
+# AetherMesh Staging Environment
+# EP-009 M3. 3 mix nodes + 1 entry gateway + 1 exit gateway + 1 DHT node + 1 keyring stub.
+
+x-aethermesh-healthcheck: &aethermesh-healthcheck
+  test: ["CMD", "aethermesh", "node", "health", "--endpoint", "http://127.0.0.1:9100"]
+  interval: 30s
+  timeout: 5s
+  retries: 3
+
+x-aethermesh-node-entrypoint: &aethermesh-node-entrypoint
+  ["sh", "-c", 'aethermesh node start --role "$$AEP_NODE_ROLE" && tail -f /dev/null']
+
+x-aethermesh-keyring-entrypoint: &aethermesh-keyring-entrypoint
+  ["sh", "-c", "aethermesh keyring serve --socket /run/aethermesh/keyring.sock && tail -f /dev/null"]
+
+services:
+  mix-1:
+    build:
+      context: ../..
+      dockerfile: Dockerfile.mix-node
+    environment:
+      AEP_NODE_ROLE: mix-layer-1
+      AEP_NODE_ID_HEX: "4a3f12bc000000000000000000000000"
+      AEP_PQ_BACKEND: liboqs
+      AEP_LOG_LEVEL: info
+      AEP_DIRECTORY_URL: https://directory.staging.example.org/epoch.json
+    entrypoint: *aethermesh-node-entrypoint
+    ports:
+      - "4041:4040/udp"
+      - "9101:9100"
+    healthcheck: *aethermesh-healthcheck
+
+  mix-2:
+    build:
+      context: ../..
+      dockerfile: Dockerfile.mix-node
+    environment:
+      AEP_NODE_ROLE: mix-layer-2
+      AEP_NODE_ID_HEX: "5b4e23cd000000000000000000000000"
+      AEP_PQ_BACKEND: liboqs
+      AEP_LOG_LEVEL: info
+      AEP_DIRECTORY_URL: https://directory.staging.example.org/epoch.json
+    entrypoint: *aethermesh-node-entrypoint
+    ports:
+      - "4042:4040/udp"
+      - "9102:9100"
+    healthcheck: *aethermesh-healthcheck
+
+  mix-3:
+    build:
+      context: ../..
+      dockerfile: Dockerfile.mix-node
+    environment:
+      AEP_NODE_ROLE: mix-layer-3
+      AEP_NODE_ID_HEX: "6c5f34de000000000000000000000000"
+      AEP_PQ_BACKEND: liboqs
+      AEP_LOG_LEVEL: info
+      AEP_DIRECTORY_URL: https://directory.staging.example.org/epoch.json
+    entrypoint: *aethermesh-node-entrypoint
+    ports:
+      - "4043:4040/udp"
+      - "9103:9100"
+    healthcheck: *aethermesh-healthcheck
+
+  gateway-entry:
+    build:
+      context: ../..
+      dockerfile: Dockerfile.gateway
+    environment:
+      AEP_NODE_ROLE: gateway-entry
+      AEP_NODE_ID_HEX: "7d6e45ef000000000000000000000000"
+      AEP_PQ_BACKEND: liboqs
+      AEP_LOG_LEVEL: info
+    entrypoint: *aethermesh-node-entrypoint
+    ports:
+      - "4050:4040/udp"
+      - "9150:9100"
+    healthcheck: *aethermesh-healthcheck
+
+  gateway-exit:
+    build:
+      context: ../..
+      dockerfile: Dockerfile.gateway
+    environment:
+      AEP_NODE_ROLE: gateway-exit
+      AEP_NODE_ID_HEX: "8e7f56f0000000000000000000000000"
+      AEP_PQ_BACKEND: liboqs
+      AEP_LOG_LEVEL: info
+    entrypoint: *aethermesh-node-entrypoint
+    ports:
+      - "4051:4040/udp"
+      - "9151:9100"
+    healthcheck: *aethermesh-healthcheck
+
+  dht-node:
+    build:
+      context: ../..
+      dockerfile: Dockerfile.mix-node
+    environment:
+      AEP_NODE_ROLE: dht-node
+      AEP_NODE_ID_HEX: "9f8e67a1000000000000000000000000"
+      AEP_PQ_BACKEND: liboqs
+      AEP_LOG_LEVEL: info
+      AEP_REVOCATION_FETCH_INTERVAL_S: "300"
+    entrypoint: *aethermesh-node-entrypoint
+    ports:
+      - "9160:9100"
+    healthcheck: *aethermesh-healthcheck
+
+  keyring:
+    build:
+      context: ../..
+      dockerfile: Dockerfile.mix-node
+    environment:
+      AEP_PQ_BACKEND: liboqs
+      AEP_KEYRING_SOCKET: /run/aethermesh/keyring.sock
+    entrypoint: *aethermesh-keyring-entrypoint
+    ports:
+      - "9170:9100"
+    healthcheck: *aethermesh-healthcheck
