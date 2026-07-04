@@ -235,6 +235,8 @@ class TestDischarge:
             "caveat_type",
             "session_root",
             "discharger_did",
+            "binding_nonce",
+            "issued_at",
         ]
         d = api.Discharge("time", b"\x00" * 32, "did:web:org.example")
         assert d.caveat_type == "time"
@@ -264,6 +266,8 @@ class TestKeyringService:
             "session_root",
             "user_consent",
             "lifetime_s",
+            "binding_nonce",
+            "issued_at",
         ]
 
 
