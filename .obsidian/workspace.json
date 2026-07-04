@@ -179,7 +179,18 @@
   },
   "active": "2e131e7b973cb08b",
   "lastOpenFiles": [
-    "Untitled.base",
+    "tests/interop/__pycache__/test_vectors_scaffold.cpython-313-pytest-9.1.1.pyc",
+    "tests/interop/test_vectors_scaffold.py",
+    "tests/contracts/__pycache__/test_api_surface.cpython-313-pytest-9.1.1.pyc.7652",
+    "tests/unit/cli/__pycache__/test_cli_units.cpython-313-pytest-9.1.1.pyc.27536",
+    "aethermesh/tools/__pycache__/init_audit_db.cpython-313.pyc",
+    "tests/unit/tools/__pycache__/test_tool_entrypoints.cpython-313-pytest-9.1.1.pyc",
+    "tests/unit/tools/__pycache__/test_keyring_serve.cpython-313-pytest-9.1.1.pyc",
+    "tests/unit/cli/__pycache__/test_cli_units.cpython-313-pytest-9.1.1.pyc",
+    "tests/unit/cli/__pycache__/__init__.cpython-313.pyc",
+    "tests/unit/cli/__pycache__",
+    "tests/unit/tools/test_tool_entrypoints.py",
+    "tests/interop/results/INTEROP_REPORT.md",
     "PROJECT_BRIEF.md",
     "ARCHITECTURE.md"
   ]
