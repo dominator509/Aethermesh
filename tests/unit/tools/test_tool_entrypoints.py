@@ -16,6 +16,47 @@ def test_smoke_main_exits_success(capsys: pytest.CaptureFixture[str]) -> None:
     assert "smoke test: ok" in capsys.readouterr().out
 
 
+def test_smoke_prod_rejects_placeholder(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    monkeypatch.setenv("AEP_PQ_BACKEND", "placeholder")
+
+    with pytest.raises(SystemExit) as raised:
+        smoke.main(["--prod"])
+
+    assert raised.value.code == 1
+    assert "placeholder refused" in capsys.readouterr().err
+
+
+def test_smoke_prod_rejects_missing_liboqs(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    monkeypatch.setenv("AEP_PQ_BACKEND", "liboqs")
+    monkeypatch.setattr(smoke, "_liboqs_binding_available", lambda: False)
+
+    with pytest.raises(SystemExit) as raised:
+        smoke.main(["--prod"])
+
+    assert raised.value.code == 1
+    assert "liboqs Python binding unavailable" in capsys.readouterr().err
+
+
+def test_smoke_prod_accepts_available_liboqs(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    monkeypatch.setenv("AEP_PQ_BACKEND", "liboqs")
+    monkeypatch.setattr(smoke, "_liboqs_binding_available", lambda: True)
+
+    with pytest.raises(SystemExit) as raised:
+        smoke.main(["--prod"])
+
+    assert raised.value.code == 0
+    assert "smoke test: ok" in capsys.readouterr().out
+
+
 def test_init_audit_db_main(
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture[str],
