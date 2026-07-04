@@ -21,6 +21,7 @@
 |---|---|---|---|---|---|---|
 | `AEP_LOG_LEVEL` | optional | all | `info` | no | `debug`/`info`/`warning`/`error` | one of 4 |
 | `AEP_AUDIT_DB_PATH` | optional | all | `./audit.db` | no | SQLite path for local audit | parent dir writable |
+| `AEP_AUDIT_RETENTION_DAYS` | optional | all | `90` | no | Audit receipt retention window in days | integer ≥ 30 |
 | `AEP_DIRECTORY_URL` | required for prod | prod | `https://directory.example.org/epoch.json` | no | Directory bootstrap | https only in prod |
 | `AEP_KEYRING_SOCKET` | required for end-agent | dev/prod | `/run/aethermesh/keyring.sock` | no | Unix socket to keyring | path is a socket |
 | `AEP_PQ_BACKEND` | required | all | `liboqs` | no | `placeholder` (dev only) or `liboqs` (prod) | prod refuses `placeholder` |
