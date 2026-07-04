@@ -30,6 +30,25 @@ tests/
 .agent/   scripts/   bundles/   ops/
 ```
 
+## Discovery (EP-000) — actual vs intended (2026-07-03)
+
+| Path | Intended | Actual | Status |
+|---|---|---|---|
+| `aethermesh/` | 7 subpackages | Absent | To be created EP-001 |
+| `tests/` | 9 subdirectories | Absent | To be created EP-001 |
+| `bundles/` | 5 reference bundles (L1-L5) | Absent | To be created EP-001 |
+| `pyproject.toml` | Present with deps | Absent | To be created EP-001 |
+| `.github/workflows/` | GHA CI | Absent | To be created EP-009 |
+| `.agent/` | Specs, ExecPlans, templates | Present (40 files) | OK |
+| `scripts/` | Shell wrappers (11 scripts) | Present | OK — untested without `aethermesh/` |
+| `*.md` (authority docs) | AGENTS, ARCHITECTURE, COMMANDS, etc. | Present (18 docs) | OK |
+| Python | ≥ 3.11 | 3.14.4 | OK |
+| uv | ≥ 0.4 | 0.11.25 | OK |
+| Git | Single commit | `25a1434` Initial blueprint import | OK |
+| Remote | GitHub | `github.com/dominator509/Aethermesh.git` | OK |
+
+**Verdict:** Repo is a planning/agent blueprint with zero implementation code. EP-001 must bootstrap `pyproject.toml`, `aethermesh/`, `tests/`, and `bundles/` from scratch.
+
 ## Layer Responsibilities
 | Layer | Responsibility | Key Public API |
 |---|---|---|

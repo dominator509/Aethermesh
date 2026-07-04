@@ -1,6 +1,6 @@
 # EP-000 — Repository Discovery
 
-- **Status:** Draft  - **Owner:** Architecture  - **Phase:** 0  - **Specs:** SPEC-000
+- **Status:** Stopped / discovery baseline recorded  - **Owner:** Architecture  - **Phase:** 0  - **Specs:** SPEC-000
 
 ## 1. Purpose / Big Picture
 Discover the current state of the AetherMesh repo. Confirm `bundles/aethermesh_L{1..5}/` demos run, detect drift between bundles and any consolidated `aethermesh/` package, and produce verified updates to `COMMANDS.md`, `ARCHITECTURE.md`, and `ASSUMPTIONS.md`. Prerequisite for every later ExecPlan.
@@ -84,37 +84,47 @@ No public-API changes. Pure inventory.
 - **Recovery:** No missing command found → record "no drift" in Decision Log.
 
 ## 9. Concrete Steps
-M1 -> M6 in order.
+M1 -> M6 in order. All executed 2026-07-03.
 
 ## 10. Validation and Acceptance
 ### Acceptance Criteria
-- [ ] All 5 bundle demos exit 0.
-- [ ] `ASSUMPTIONS.md` A1, A2, A7, A12 have verification notes.
-- [ ] `ARCHITECTURE.md` Repository Map reflects actual state.
-- [ ] `COMMANDS.md` updated if needed.
-- [ ] First failing gate of `./scripts/verify.sh` recorded in Surprises (EP-001 will fix).
+- [ ] All 5 bundle demos exit 0. **FAIL: bundles do not exist; A12 refuted. Codex audit treats this as the EP-000 discovery blocker to carry into EP-001, not as a passed criterion.**
+- [x] `ASSUMPTIONS.md` A1, A2, A7, A12 have verification notes.
+- [x] `ARCHITECTURE.md` Repository Map reflects actual state.
+- [x] `COMMANDS.md` updated if needed. **No drift found; 34 command rows sufficient.**
+- [x] First failing gate of `./scripts/verify.sh` recorded in Surprises (EP-001 will fix).
 
 ## 11. Idempotence and Recovery
 Every step is read-only or appends notes. Re-running re-confirms; previous notes not deleted.
 
 ## 12. Progress
-- [ ] M1 — Inventory
-- [ ] M2 — Bundles run
-- [ ] M3 — Package manager + Python
-- [ ] M4 — CI configuration
-- [ ] M5 — Drift mapping
-- [ ] M6 — Missing commands
-- [ ] Final review
+- [x] M1 — Inventory (88 tracked files, 0 Python files, single commit `25a1434`)
+- [ ] M2 — Bundles run (**FAILED: no `bundles/` exist; A12 refuted; no demo command could run**)
+- [x] M3 — Package manager + Python (Python 3.14.4, uv 0.11.25; Windows uses `python` not `python3`)
+- [x] M4 — CI configuration (no `.github/workflows/`; repo confirmed on GitHub)
+- [x] M5 — Drift mapping (neither `aethermesh/` nor `bundles/` exist; discovery table appended to ARCHITECTURE.md)
+- [x] M6 — Missing commands (34 rows in COMMANDS.md; no drift detected; all commands intact but untestable without package)
+- [x] Final review
 
 ## 13. Surprises & Discoveries
-<filled as work proceeds>
+1. **A12 REFUTED:** ASSUMPTIONS.md A12 claimed "Existing L1–L5 reference bundles in `bundles/` are the starting point" — neither `bundles/` nor `aethermesh/` exist on disk. Repo is a pure blueprint with zero implementation code.
+2. **No pyproject.toml:** No Python package infrastructure exists. `uv sync`, `uv run`, and all test commands fail.
+3. **No tests/ directory:** No test tree, no `conftest.py`, no test vectors.
+4. **No .github/workflows/:** CI is not configured. ASSUMPTIONS.md A7 assumes GHA but nothing is wired.
+5. **Windows python naming:** `python3` doesn't exist on this host; `python` returns 3.14.4. COMMANDS.md and scripts should account for this.
+6. **verify.sh gate:** Fails with `ERROR: pyproject.toml missing (run from repo root)` — this is the first gate EP-001 must fix.
+7. **REPO_BRIEF.md was accurate:** It already noted implementation files are not present. This was written before EP-000 ran.
+8. **11 shell scripts exist** under `scripts/` but none are runnable without the Python package.
 
 ## 14. Decision Log
-<entries>
+| # | Context | Decision | Alternatives | Consequences |
+|---|---|---|---|---|
+| D1 | M2 validation (`for n in 1..5; python -m code`) impossible — no bundles exist | Do not mark the bundle demo criterion as passed; record EP-000 as stopped / discovery baseline recorded and carry the blocker into EP-001 | Treat M2 as passed or N/A — rejected by Codex audit because the acceptance criterion says demos exit 0 | A12 refuted; EP-001 must create bundles/package from scratch before demo criteria can pass |
+| D2 | `python3` not found on Windows | Use `python --version` for verification; note in ASSUMPTIONS.md A1 | Enforce `python3` alias — rejected as unnecessary friction | COMMANDS.md and scripts may need `python`/`python3` detection in EP-001 |
+| D3 | M6: any commands missing from COMMANDS.md? | 34 rows present; all documented commands map to expected workflow. No additions needed at Phase 0. | N/A | No changes to COMMANDS.md |
 
 ## 15. Outcomes & Retrospective
-<Filled at completion.>
-- **What landed:**
-- **What changed vs plan:**
-- **Remaining risks:**
-- **Production-readiness impact:** Phase 0 exits; EP-001 unblocked.
+- **What landed:** Full repo inventory confirmed. 88 tracked files, all agent/docs/scripts infrastructure. Python 3.14.4 + uv 0.11.25 verified. GitHub remote confirmed. ASSUMPTIONS.md A1, A2, A7, A12 updated with verification notes. ARCHITECTURE.md Repository Map updated with discovery table. ASSUMPTIONS.md A12 refuted — no bundles or package exist.
+- **What changed vs plan:** M2 failed (no bundles). All other milestones completed with informative negative findings. ASSUMPTIONS.md A12 reclassified from "confirmed" to "refuted." Table formatting fixed (verification notes appended to existing cells, not as new rows).
+- **Remaining risks:** All implementation is ahead. No code exists to test, lint, typecheck, or build. EP-001 must create `pyproject.toml`, `aethermesh/`, `tests/`, and `bundles/` from scratch. Python 3.14 may have subtle compatibility differences vs the documented 3.11 target.
+- **Production-readiness impact:** Phase 0 exits. EP-001 is unblocked with accurate repo knowledge. First gate to fix: `pyproject.toml` creation.
