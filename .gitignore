@@ -1,0 +1,25 @@
+# Python/runtime caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Local environments and tool state
+.venv/
+.tox/
+.nox/
+.claude/
+
+# Local Obsidian plugins/state not part of repo docs
+.obsidian/community-plugins.json
+.obsidian/plugins/

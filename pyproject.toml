@@ -1,0 +1,77 @@
+[project]
+name = "aethermesh"
+version = "0.1.0.dev0"
+description = "AetherMesh / AEP — Agent Exchange Protocol reference implementation"
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "AetherMesh Contributors" },
+]
+keywords = ["aethermesh", "aep", "mixnet", "dht", "noise", "pqc", "captokens"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+    "cryptography>=42.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.11.0",
+    "mypy>=1.13.0",
+    "pytest>=8.0.0",
+    "pytest-cov>=6.0.0",
+    "hypothesis>=6.100.0",
+    "bandit>=1.7.0",
+    "pip-audit>=2.7.0",
+]
+
+[project.scripts]
+aethermesh = "aethermesh.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "C4", "SIM"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+strict = true
+python_version = "3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v"
+
+[tool.coverage.run]
+source = ["aethermesh"]
+
+[tool.coverage.report]
+exclude_also = [
+    "def __repr__",
+    "if self\\.debug",
+    "if settings\\.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
