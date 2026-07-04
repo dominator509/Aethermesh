@@ -189,10 +189,14 @@ class Discharge:
         caveat_type: str,
         session_root: bytes,
         discharger_did: str,
+        binding_nonce: bytes = b"",
+        issued_at: int = 0,
     ) -> None:
         self.caveat_type = caveat_type
         self.session_root = session_root
         self.discharger_did = discharger_did
+        self.binding_nonce = binding_nonce
+        self.issued_at = issued_at
 
 
 # ---------------------------------------------------------------------------
@@ -249,11 +253,19 @@ class KeyringService:
         session_root: bytes,
         user_consent: bool,
         lifetime_s: int = 300,
+        binding_nonce: bytes = b"",
+        issued_at: int = 0,
     ) -> Discharge | None:
         """Issue a discharge for a caveat, if consent is given."""
         if not user_consent:
             return None
-        return Discharge(caveat.caveat_type, session_root, self.discharger_did)
+        return Discharge(
+            caveat.caveat_type,
+            session_root,
+            self.discharger_did,
+            binding_nonce,
+            issued_at,
+        )
 
 
 # ---------------------------------------------------------------------------

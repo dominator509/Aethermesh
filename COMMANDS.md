@@ -38,6 +38,7 @@ Subsequent commands must not pipe to shell.
 | Bootstrap directory | `uv run python -m aethermesh.tools.bootstrap_directory --out ./directory.json` | `directory bootstrapped` |
 | Audit DB migrate | `uv run python -m aethermesh.tools.audit_db migrate --path ./audit.db` | `audit db at schema vN` |
 | Coverage report | `uv run pytest --cov=aethermesh --cov-report=term-missing` | `TOTAL ≥ 85%` |
+| L5 verifier branch coverage | `uv run pytest tests/unit/L5/verifier/ --cov=aethermesh.L5_captokens.verifier --cov-branch --cov-fail-under=70 -q` | exit 0; `TOTAL ≥ 70%` |
 
 ## Forbidden Commands
 - `pip install ...` (use `uv add` and `uv sync`).
