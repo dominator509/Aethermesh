@@ -1,0 +1,46 @@
+{
+  "TEST_ONLY": true,
+  "description": "SHA3-256 known-answer test vectors",
+  "vectors": [
+    {
+      "length": 0,
+      "msg": "",
+      "md": "a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a"
+    },
+    {
+      "length": 8,
+      "msg": "00",
+      "md": "5d53469f20fef4f8eab52b88044ede69c77a6a68a60728609fc4a65ff531e7d0"
+    },
+    {
+      "length": 16,
+      "msg": "53a9",
+      "md": "ea5cc38d4e9b4532dddae7340ef6f642b2114bbcc6b643e422cfdb8a4b9b1ab1"
+    },
+    {
+      "length": 24,
+      "msg": "616263",
+      "md": "3a985da74fe225b2045c172d6bd390bd855f086e3e9d525b46bfe24511431532"
+    },
+    {
+      "length": 32,
+      "msg": "00010203",
+      "md": "33bad5430899ed6f8beaf3e732b2a2cad1d40b7c9de0cfcdc7e0bc0756803a10"
+    },
+    {
+      "length": 48,
+      "msg": "deadbeefcafe",
+      "md": "811baceed577adab261200b5c68c4a63cd63efce2714cf24196a78e83e11fb08"
+    },
+    {
+      "length": 104,
+      "msg": "aabbccddeeff00112233445566778899aabbccdd",
+      "md": "f1c8a439e1b310cebcba0dd86114ab0d3669555fca92e1cab466d25a1e46ad94"
+    },
+    {
+      "length": 160,
+      "msg": "aabbccddeeff00112233445566778899aabbccddaabbccddeeff00112233445566778899aabbccdd",
+      "md": "cbeae7de59ab19a18ea35ef56826ed91239d079720bb4a80cec68bcac566eff3"
+    }
+  ]
+}
