@@ -1,6 +1,8 @@
-"""AetherMesh CLI entry point."""
+"""AetherMesh CLI entry point.
 
+EP-005 — Body implemented.
+"""
 
-def main() -> int:
-    """CLI entry point. Body lands in EP-005."""
-    raise NotImplementedError("EP-005 implements the CLI")
+from aethermesh.cli.main import main
+
+__all__ = ["main"]
