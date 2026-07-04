@@ -1,0 +1,21 @@
+{
+  "title": "L4 Session",
+  "uid": "aep-l4-session",
+  "panels": [
+    {
+      "title": "Messages processed",
+      "targets": [{"expr": "rate(aep_l4_messages_total[1m])"}],
+      "type": "graph"
+    },
+    {
+      "title": "Policy decisions",
+      "targets": [{"expr": "rate(aep_l4_policy_decisions_total[1m])"}],
+      "type": "graph"
+    },
+    {
+      "title": "DH ratchet steps",
+      "targets": [{"expr": "rate(aep_l4_ratchet_dh_steps_total[1m])"}],
+      "type": "graph"
+    }
+  ]
+}

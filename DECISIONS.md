@@ -13,6 +13,7 @@
 | ADR-0008 | Proposed | TBD | Security | Prod refuses to start unless `AEP_PQ_BACKEND=liboqs` |
 | ADR-0009 | Proposed | TBD | Observability | structlog JSON + OpenTelemetry; no PII; no body content |
 | ADR-0010 | Proposed | TBD | Security | Security review sign-off (gates 1.0) |
+| ADR-0011 | Proposed | 2026-07-04 | Observability | Ops directory for observability artifacts |
 
 ## ADR Index
 Each ADR follows `.agent/templates/adr-template.md`. ADR files live in `.agent/decisions/`.

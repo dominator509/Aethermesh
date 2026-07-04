@@ -1,0 +1,21 @@
+{
+  "title": "L5 Authority",
+  "uid": "aep-l5-authority",
+  "panels": [
+    {
+      "title": "Token verify duration (p99)",
+      "targets": [{"expr": "histogram_quantile(0.99, rate(aep_l5_token_verify_duration_seconds_bucket[5m]))"}],
+      "type": "graph"
+    },
+    {
+      "title": "Discharge issuances",
+      "targets": [{"expr": "rate(aep_l5_discharge_issuances_total[1m])"}],
+      "type": "graph"
+    },
+    {
+      "title": "Revocation manifest age",
+      "targets": [{"expr": "aep_l5_revocation_manifest_age_seconds"}],
+      "type": "graph"
+    }
+  ]
+}

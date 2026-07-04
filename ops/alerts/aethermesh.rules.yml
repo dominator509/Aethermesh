@@ -1,0 +1,54 @@
+groups:
+  - name: aethermesh
+    rules:
+      - alert: HandshakeFailureRate
+        expr: |
+          sum(rate(aep_l3_handshake_duration_seconds_count{result!="success"}[5m]))
+          / sum(rate(aep_l3_handshake_duration_seconds_count[5m])) > 0.05
+        for: 5m
+        labels:
+          severity: SEV-2
+        annotations:
+          summary: "Handshake failure rate > 5%"
+
+      - alert: ReplayFlood
+        expr: rate(aep_l1_sphinx_replay_rejections_total[1m]) > 100
+        for: 1m
+        labels:
+          severity: SEV-2
+        annotations:
+          summary: "Replay rejection rate > 100/s"
+
+      - alert: RevocationStale
+        expr: aep_l5_revocation_manifest_age_seconds > 600
+        for: 5m
+        labels:
+          severity: SEV-3
+        annotations:
+          summary: "Revocation manifest age > 2x fetch interval"
+
+      - alert: LogRedactionViolation
+        expr: rate(log_redaction_violation_total[5m]) > 0
+        for: 5m
+        labels:
+          severity: SEV-1
+        annotations:
+          summary: "Forbidden key detected in log emission"
+
+      - alert: TokenVerifyP99High
+        expr: histogram_quantile(0.99, rate(aep_l5_token_verify_duration_seconds_bucket[5m])) > 0.005
+        for: 5m
+        labels:
+          severity: SEV-3
+        annotations:
+          summary: "Token verify p99 > 5 ms"
+
+      - alert: PolicyDenyRateSpike
+        expr: |
+          rate(aep_l4_policy_decisions_total{decision=~"DENY_.*"}[5m])
+          / rate(aep_l4_policy_decisions_total[5m]) > 2
+        for: 5m
+        labels:
+          severity: SEV-3
+        annotations:
+          summary: "Policy denial rate doubled vs baseline"
