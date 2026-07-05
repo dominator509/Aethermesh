@@ -26,7 +26,7 @@ Subsequent commands must not pipe to shell.
 | Interop / E2E (slow) | `uv run pytest tests/interop -q --slow` | exit 0 |
 | E2E (CLI) | `uv run pytest tests/e2e -q` | exit 0 |
 | Property tests | `uv run pytest tests/property -q` | exit 0 |
-| Performance | `uv run pytest tests/perf --benchmark-only` | budgets met |
+| Performance | `uv run pytest tests/perf --benchmark-only --benchmark-json=tests/perf/results/baseline.json` | budgets met + JSON written |
 | Build wheel + sdist | `uv build` | `dist/aethermesh-X.Y.Z*.{whl,tar.gz}` |
 | Security check | `uv run bandit -r aethermesh -ll -q` | `No issues identified.` |
 | Dependency audit | `uv run pip-audit` | `No known vulnerabilities found` |

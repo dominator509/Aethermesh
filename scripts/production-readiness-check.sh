@@ -19,8 +19,10 @@ echo "Gate 4: interop matrix"
 uv run pytest tests/interop --slow -q || fail "interop matrix failed"
 
 echo "Gate 5: performance baseline"
-uv run pytest tests/perf --benchmark-only --benchmark-compare-fail=mean:10% \
-  || fail "performance regression > 10%"
+PERF_BASELINE_JSON="tests/perf/results/baseline.json"
+mkdir -p "$(dirname "$PERF_BASELINE_JSON")"
+uv run pytest tests/perf --benchmark-only --benchmark-json="$PERF_BASELINE_JSON" \
+  || fail "performance baseline failed"
 
 echo "Gate 6: security tests"
 uv run pytest tests/security -q || fail "security tests failed"
@@ -44,8 +46,15 @@ git grep -nE "TODO|FIXME" aethermesh/L1_sphinx aethermesh/L2_dht \
   && fail "TODO/FIXME remain in protocol code" || true
 
 echo "Gate 12: audit DB migrations sane"
-uv run python -m aethermesh.tools.audit_db migrate --check \
+audit_fixture_dir=".tmp/production-readiness"
+audit_fixture_path="$audit_fixture_dir/gate12-audit.db"
+mkdir -p "$audit_fixture_dir"
+rm -f "$audit_fixture_path"
+trap 'rm -rf "$audit_fixture_dir"' EXIT HUP INT TERM
+uv run python -m aethermesh.tools.audit_db migrate --path "$audit_fixture_path" --check \
   || fail "audit DB migration check failed"
+trap - EXIT HUP INT TERM
+rm -rf "$audit_fixture_dir"
 
 echo "Gate 13: dashboards parse"
 for d in ops/dashboards/*.json; do

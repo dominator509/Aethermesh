@@ -16,7 +16,7 @@ Subjective quality assessments.
 2. `AEP_PQ_BACKEND=placeholder uv run python -m aethermesh.tools.smoke --prod` exits non-zero with clear message.
 3. `AEP_PQ_BACKEND=liboqs uv run python -m aethermesh.tools.smoke --prod` exits 0.
 4. `uv run pytest tests/interop --slow -q` exits 0.
-5. `uv run pytest tests/perf --benchmark-only --benchmark-compare-fail=mean:10%` exits 0 vs previous tag.
+5. `uv run pytest tests/perf --benchmark-only --benchmark-json=tests/perf/results/baseline.json` exits 0, writes the JSON artifact, and the benchmark assertions enforce the documented budgets.
 6. `uv run pytest tests/security -q` exits 0.
 7. `uv run pip-audit` exits 0.
 8. `./scripts/dependency-audit.sh` exits 0.

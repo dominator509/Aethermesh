@@ -1,62 +1,75 @@
 # REPO_BRIEF - AetherMesh / AEP
 
 ## Purpose
-AetherMesh / AEP is a reference implementation blueprint for a vendor-neutral Agent Exchange Protocol. The intended production system has five layers: L1 Sphinx mixnet, L2 capability-hashed DHT, L3 Noise-PQ XK with mutual attestation, L4 PQ Double Ratchet plus MLS, and L5 macaroon-style CapTokens.
+AetherMesh / AEP is a pre-production reference implementation and readiness harness for a vendor-neutral Agent Exchange Protocol. The intended production system has five layers: L1 Sphinx mixnet, L2 capability-hashed DHT, L3 Noise-PQ XK with mutual attestation, L4 PQ Double Ratchet plus MLS, and L5 macaroon-style CapTokens.
+
+## Current Status
+- Version: `0.1.0.dev0`.
+- Development baseline: `AEP_PQ_BACKEND=liboqs ./scripts/verify.sh` passes.
+- Production readiness: interop is scaffold-only; the perf suite now records `tests/perf/results/baseline.json`, Gates 12 and 14 now pass locally, and reference-VM perf sign-off plus ADR-0010 human sign-off still block launch.
+- ADR-0010 remains Proposed; no v1.0.0 tag or external publishing until all production-readiness gates pass.
+- Several layer bodies remain stubs/scaffolds; do not describe this repo as production-ready.
 
 ## Stack
-- Current checkout shape: blueprint/control-plane docs, `.agent` specs and ExecPlans, shell scripts, and Obsidian vault config.
-- Intended runtime stack from project docs: Python 3.11+, `uv`, `ruff`, `mypy`, `pytest`, `bandit`, `pip-audit`, SQLite tooling, liboqs-backed PQ crypto, and protocol modules under `aethermesh/`.
-- Source package, tests, bundles, `pyproject.toml`, and `uv.lock` are not present in this directory as of this brief.
+- Python 3.11+, `uv`, `ruff`, `mypy`, `pytest`, `bandit`, `pip-audit`.
+- Runtime package under `aethermesh/`; tests under `tests/`.
+- SQLite audit/cache DB tooling under `aethermesh/tools/`.
+- Docker packaging via `Dockerfile.mix-node`, `Dockerfile.gateway`, and `ops/staging/docker-compose.yml`.
+- Intended production PQ backend: system `liboqs` plus Python `oqs` wrapper exposing `KeyEncapsulation` and `Signature`.
+- `liboqs-python` is pinned from the upstream Git tag `0.12.0` in `pyproject.toml` / `uv.lock`.
 
 ## Important Entrypoints
 - Agent guardrails: `AGENTS.md`.
+- Claude/DeepSeek instructions: `CLAUDE.md`.
 - Command authority: `COMMANDS.md`.
-- Active first ExecPlan: `.agent/execplans/EP-000-repository-discovery.md`.
-- ExecPlan rules: `.agent/PLANS.md` and `.agent/EXECUTION_RULES.md`.
 - Architecture map: `ARCHITECTURE.md`.
+- Current production blocker record: `.agent/execplans/EP-010-production-readiness.md`.
 - Production gates: `PRODUCTION_READINESS.md` and `.agent/specs/SPEC-008-production-readiness.md`.
-- Existing project brief: `PROJECT_BRIEF.md`.
+- README for human setup: `README.md`.
 
 ## Commands
-Run commands from the repo root and follow `COMMANDS.md`; do not invent replacements.
+Run from repo root and follow `COMMANDS.md`; do not invent replacements.
 
 | Purpose | Command |
 |---|---|
+| Sync deps | `uv sync --all-extras --dev` |
 | Preflight | `./scripts/preflight.sh` |
-| Install/sync | `uv sync --all-extras --dev` |
-| Lint | `uv run ruff check .` |
-| Format check | `uv run ruff format --check .` |
-| Typecheck | `uv run mypy aethermesh tests` |
+| Full verify | `./scripts/verify.sh` |
+| Production readiness | `./scripts/production-readiness-check.sh` |
 | Unit tests | `uv run pytest tests/unit -q` |
 | Integration tests | `uv run pytest tests/integration -q` |
 | E2E tests | `uv run pytest tests/e2e -q` |
+| Security check | `./scripts/security-check.sh` |
+| Dependency audit | `./scripts/dependency-audit.sh` |
 | Build | `uv build` |
-| Security check | `uv run bandit -r aethermesh -ll -q` |
-| Dependency audit | `uv run pip-audit` |
 | Smoke | `uv run python -m aethermesh.tools.smoke` |
-| Full verify | `./scripts/verify.sh` |
 
-Note: `scripts/preflight.sh` currently requires `pyproject.toml`, so this blueprint-only checkout is expected to fail that gate until implementation files are added.
+Windows note: use Git Bash or `sh.exe scripts/<name>.sh` when plain PowerShell cannot run shell scripts.
 
 ## Important Directories
-- `.agent/execplans/` - EP-000 through EP-010 milestone plans.
-- `.agent/specs/` - SPEC-000 through SPEC-008.
-- `.agent/prompts/` - continuation, debugging, execution, and final-review prompts.
-- `.agent/checklists/` - readiness, validation, release, rollback, and incident checklists.
-- `.agent/templates/` - ADR, ExecPlan, runbook, spec, and test templates.
-- `.obsidian/` - existing Obsidian vault configuration.
-- `scripts/` - documented shell wrappers for gates.
-- Intended but not currently present: `aethermesh/`, `tests/`, `bundles/`, `ops/`, `.github/workflows/`.
+- `aethermesh/common/` - hashes, AEAD, canonical encoding, DIDs, PQ backend, logging, metrics.
+- `aethermesh/L3_handshake/` - handshake and attestation scaffolding.
+- `aethermesh/L4_ratchet/` - ratchet/session scaffolding.
+- `aethermesh/L5_captokens/` - caveats and verifier.
+- `aethermesh/cli/` - `aethermesh` CLI.
+- `aethermesh/tools/` - smoke, health, keyring, audit/cache DB, migrations.
+- `tests/` - unit, integration, e2e, property, security, interop scaffolding.
+- `ops/` - dashboards, alerts, runbooks, staging compose, incidents.
+- `.agent/` - ExecPlans, specs, ADRs, templates, prompts, checklists.
+- `.github/workflows/` - CI, release, and staging workflows.
 
 ## Safety Notes
 - Do not weaken `AGENTS.md`; it is the primary repo-local guardrail after current user instruction.
 - Do not implement from `ROADMAP.md` directly; use the active ExecPlan.
 - Do not add dependencies without checking `pyproject.toml` and recording the decision.
-- Do not read or write `/var/lib/aethermesh/` or `~/.aethermesh/` without explicit permission.
 - Never commit secrets, private keys, attestation signing keys, discharger keys, or production audit logs.
+- Do not read/write/delete `/var/lib/aethermesh/` or `~/.aethermesh/` without explicit permission.
 - Replacing PQ placeholders with liboqs requires ADR plus explicit STOP acknowledgement.
+- Do not mark ADR-0010 Accepted, push release tags, publish to PyPI/GHCR, or claim production readiness without the required human/operator gates.
 
 ## Current Unknowns / TODO
-- Confirm whether the actual implementation checkout lives elsewhere or has not yet been unpacked.
-- Run EP-000 once this directory is a Git worktree and implementation files exist.
-- Confirm package metadata, CI, test tree, and bundle demo locations when present.
+- Real layer implementations must replace remaining stubs before interop/perf claims.
+- `tests/interop/external/` is absent, so the required two-implementation matrix is not available yet.
+- `tests/perf/` now exists and records `tests/perf/results/baseline.json`, but L1/L3/L4 still benchmark placeholder or stub-level surfaces and no reference benchmark VM evidence is recorded yet.
+- Performance reference environment and external implementation partner are still needed.
+- ADR-0010 is still `Proposed`, so Gate 16 is now the first failing production-readiness gate.

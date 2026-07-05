@@ -1,7 +1,5 @@
 """Tests for aethermesh.common.pq_backend — SPEC-001 § Required Behavior items 5-6."""
 
-import os
-
 import pytest
 
 from aethermesh.common.pq_backend import (
@@ -155,10 +153,13 @@ class TestHybrid:
 
 
 class TestBackendSelection:
-    def test_default_placeholder(self) -> None:
+    def test_default_placeholder(self, monkeypatch: pytest.MonkeyPatch) -> None:
         """Default backend is placeholder."""
-        assert "AEP_PQ_BACKEND" not in os.environ or os.environ["AEP_PQ_BACKEND"] == "placeholder"
-        # Should work without error
+        import aethermesh.common.pq_backend as pbm
+
+        monkeypatch.delenv("AEP_PQ_BACKEND", raising=False)
+        monkeypatch.setitem(pbm.__dict__, "BACKEND", "placeholder")
+        assert pbm._resolve_backend() == "placeholder"
         kp = mlkem_keygen()
         assert len(kp.public_key) == MLKEM768_PK_SIZE
 

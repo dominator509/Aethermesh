@@ -22,6 +22,7 @@ AetherMesh / AEP 1.0 requires a security review sign-off before the v1.0.0 tag c
 
 ### Resolved
 - [x] Hybrid PQ enforced at every KEM/sig path (ADR-0002).
+- [x] `liboqs` local integration validated: `AEP_PQ_BACKEND=liboqs ./scripts/verify.sh` and `uv run python -m aethermesh.tools.smoke --prod` pass on the current Windows environment.
 - [x] FORBIDDEN_LOG_KEYS (18 keys) enforced at emission with CI gate.
 - [x] Verifier fails closed on unknown caveat types (16 branch tests).
 - [x] Audit DB file permissions restricted to 0600 on POSIX.
@@ -29,9 +30,10 @@ AetherMesh / AEP 1.0 requires a security review sign-off before the v1.0.0 tag c
 - [x] `pip-audit` passes with zero High/Critical advisories.
 
 ### Blocking / Not Accepted for 1.0
-- [ ] liboqs Python binding not integrated; EP-010 M1 is stopped until the operator installs the system `liboqs` library and matching Python binding.
+- [ ] `tests/interop/external/` is absent, so the required two-implementation interop matrix is not available.
+- [ ] `tests/perf/` now records `tests/perf/results/baseline.json`, but L1/L3/L4 still benchmark placeholder or stub-level surfaces and no reference-VM perf sign-off is recorded.
 - [ ] L3/L4/L5 layers are contract stubs; real protocol bodies are required before production launch claims.
-- [ ] No external implementation for interop testing; the two-implementation matrix must be populated before sign-off.
+- [ ] Human security lead sign-off is still missing; ADR-0010 cannot move to Accepted without it.
 
 ### Requires Post-1.0 ADR
 - [ ] Full TPM2 PCR quoting (currently subprocess-based placeholder).
@@ -39,7 +41,7 @@ AetherMesh / AEP 1.0 requires a security review sign-off before the v1.0.0 tag c
 - [ ] Rust hot paths for Sphinx hop processing (ADR-0001 deferred).
 
 ## Decision
-**Proposed: Do not accept for v1.0.0 yet.** Keep ADR-0010 Proposed until the blocking items are resolved and a human security lead signs off.
+**Proposed: Do not accept for v1.0.0 yet.** Keep ADR-0010 Proposed until the blocking items are resolved, the performance gate has real evidence, and a human security lead signs off.
 
 ## Sign-Off
 - [ ] Security Lead: _______________ Date: ________

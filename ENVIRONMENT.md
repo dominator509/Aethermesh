@@ -9,12 +9,15 @@
 | `sqlite3` | 3.35 | Local audit DB |
 | `libsodium` | 1.0.18 | Used by `cryptography` |
 | `liboqs` | 0.10.0 | Required for `AEP_PQ_BACKEND=liboqs` |
+| `promtool` | 2.2.1 | Prometheus alert rule validation for Gate 14 |
 | `docker` | 24 | Mix-node / gateway packaging (EP-009) |
 | `make` | 4 | Optional convenience runner |
 
 ## Package Manager
 - `uv` canonical. Lockfile `uv.lock` (never hand-edited).
 - `pyproject.toml` carries PEP 621 metadata + tool config.
+- Runtime PQ binding is `liboqs-python`, pinned to the upstream Git tag `0.12.0`.
+- Dev extras include `pytest-benchmark` for `uv run pytest tests/perf --benchmark-only`.
 
 ## Environment Variables
 | Name | Required? | Env | Example | Secret? | Description | Validation |
@@ -83,6 +86,8 @@ AEP_AUDIT_DB_PATH=$(mktemp) uv run pytest tests/integration -q
 | Symptom | Fix |
 |---|---|
 | `ImportError: oqs` | Install `liboqs`; or `AEP_PQ_BACKEND=placeholder` (dev only). |
+| `pytest: error: unrecognized arguments: --benchmark-only` | `uv sync --all-extras --dev` to install `pytest-benchmark`. |
+| `production readiness: FAIL — promtool not installed` | Install Prometheus or add `promtool` to `PATH`; verify with `promtool check rules ops/alerts/aethermesh.rules.yml`. |
 | `Permission denied: /run/aethermesh/keyring.sock` | Run keyring or use `AEP_KEYRING_SOCKET=/tmp/aethermesh-test.sock` (dev). |
 | Mix node refuses to start in prod | Check `AEP_PQ_BACKEND`; placeholder rejected. |
 | Audit DB locked | Two writers; serialize via systemd. |
