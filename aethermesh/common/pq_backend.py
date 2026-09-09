@@ -55,7 +55,7 @@ def _check_liboqs() -> bool:
     global _LIBOQS_AVAILABLE
     if _LIBOQS_AVAILABLE is None:  # pragma: no cover
         try:
-            import oqs  # type: ignore[import-not-found]  # noqa: F401
+            import oqs  # type: ignore[import-untyped]  # noqa: F401
 
             _LIBOQS_AVAILABLE = True
         except ImportError:

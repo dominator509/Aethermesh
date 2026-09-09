@@ -1,0 +1,7 @@
+[32m=== AetherMesh L5 Demo (lane=fast) ===[0m
+L5 Authority: CapTokens + caveats + audit
+  [stub] CapToken minted (issuer=did:web:example.org)
+  [stub] Attenuated with 1 caveat(s)
+  [stub] Verification: ALLOW
+  [stub] Audit receipt appended
+[32m=== DONE ===[0m

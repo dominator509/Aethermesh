@@ -1,0 +1,2 @@
+node health: endpoint=http://127.0.0.1:9100 [stub]
+[32m  status: ok[0m

@@ -1,0 +1,14 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /app
+configfile: pyproject.toml
+plugins: hypothesis-6.156.1, cov-7.1.0, benchmark-5.2.3
+collected 10 items
+
+tests/property/test_aead_roundtrip.py ....                               [ 40%]
+tests/property/test_canonical_roundtrip.py ...                           [ 70%]
+tests/property/test_caveat_fuzz.py ..                                    [ 90%]
+tests/property/test_sphinx_fuzz.py .                                     [100%]
+
+============================= 10 passed in 10.46s ==============================

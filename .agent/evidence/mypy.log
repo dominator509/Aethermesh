@@ -1,0 +1,9 @@
+aethermesh/tools/smoke.py:12: error: Unused "type: ignore" comment  [unused-ignore]
+aethermesh/tools/smoke.py:12: error: Skipping analyzing "oqs": module is installed, but missing library stubs or py.typed marker  [import-untyped]
+aethermesh/tools/smoke.py:12: note: Error code "import-untyped" not covered by "type: ignore[import-not-found]" comment
+aethermesh/tools/keyring_serve.py:34: error: Unused "type: ignore" comment  [unused-ignore]
+aethermesh/common/pq_backend.py:58: error: Unused "type: ignore" comment  [unused-ignore]
+aethermesh/common/pq_backend.py:58: error: Skipping analyzing "oqs": module is installed, but missing library stubs or py.typed marker  [import-untyped]
+aethermesh/common/pq_backend.py:58: note: Error code "import-untyped" not covered by "type: ignore[import-not-found]" comment
+aethermesh/common/pq_backend.py:58: note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports
+Found 5 errors in 3 files (checked 103 source files)

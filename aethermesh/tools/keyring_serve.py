@@ -31,7 +31,7 @@ def serve(socket_path: str | None = None) -> None:
     with contextlib.suppress(OSError):
         os.unlink(path)
 
-    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)  # type: ignore[attr-defined]
+    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     try:
         sock.bind(path)
         sock.listen(5)

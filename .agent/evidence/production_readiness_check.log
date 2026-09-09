@@ -1,0 +1,192 @@
+Gate 1: verify.sh
+preflight: ok
+All checks passed!
+lint: ok
+103 files already formatted
+format check: ok
+Success: no issues found in 103 source files
+typecheck: ok
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /app
+configfile: pyproject.toml
+plugins: hypothesis-6.156.1, cov-7.1.0, benchmark-5.2.3
+collected 307 items
+
+tests/unit/L3/attestation/test_apple_sep.py ss....                       [  1%]
+tests/unit/L3/attestation/test_tpm2.py ss....                            [  3%]
+tests/unit/L3/test_handshake_stub.py ............                        [  7%]
+tests/unit/L4/test_ratchet_stub.py .....................                 [ 14%]
+tests/unit/L5/test_captoken_stub.py ......................               [ 21%]
+tests/unit/L5/verifier/test_branch_coverage.py ....................      [ 28%]
+tests/unit/cli/test_cli_units.py ......................................  [ 40%]
+tests/unit/common/test_aead.py ....................                      [ 47%]
+tests/unit/common/test_canonical.py .......................              [ 54%]
+tests/unit/common/test_constants.py ............                         [ 58%]
+tests/unit/common/test_did_resolver.py ..............                    [ 63%]
+tests/unit/common/test_errors.py ...............                         [ 68%]
+tests/unit/common/test_hashes.py ............................            [ 77%]
+tests/unit/common/test_pq_backend.py .....................               [ 84%]
+tests/unit/common/test_x25519.py .........                               [ 86%]
+tests/unit/test_placeholder.py .                                         [ 87%]
+tests/unit/tools/test_audit_db.py .......................                [ 94%]
+tests/unit/tools/test_keyring_serve.py ...........                       [ 98%]
+tests/unit/tools/test_tool_entrypoints.py .....                          [100%]
+
+======================== 303 passed, 4 skipped in 1.46s ========================
+unit tests: ok
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /app
+configfile: pyproject.toml
+plugins: hypothesis-6.156.1, cov-7.1.0, benchmark-5.2.3
+collected 21 items
+
+tests/integration/keyring/test_unix_socket.py ....                       [ 19%]
+tests/integration/test_l3_l4_l5_roundtrip.py ...                         [ 33%]
+tests/integration/test_metrics_registry.py .........                     [ 76%]
+tests/integration/test_placeholder.py .                                  [ 80%]
+tests/integration/tools/test_audit_db_roundtrip.py ....                  [100%]
+
+============================== 21 passed in 0.87s ==============================
+integration tests: ok
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /app
+configfile: pyproject.toml
+plugins: hypothesis-6.156.1, cov-7.1.0, benchmark-5.2.3
+collected 36 items
+
+tests/e2e/test_cli_exit_codes.py ........                                [ 22%]
+tests/e2e/test_cli_no_color.py .....                                     [ 36%]
+tests/e2e/test_cli_subcommands.py ................                       [ 80%]
+tests/e2e/test_health_endpoints.py ......                                [ 97%]
+tests/e2e/test_placeholder.py .                                          [100%]
+
+============================== 36 passed in 8.78s ==============================
+e2e tests: ok
+Building source distribution...
+Building wheel from source distribution...
+Successfully built dist/aethermesh-0.1.0.dev0.tar.gz
+Successfully built dist/aethermesh-0.1.0.dev0-py3-none-any.whl
+build: ok
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /app
+configfile: pyproject.toml
+plugins: hypothesis-6.156.1, cov-7.1.0, benchmark-5.2.3
+collected 11 items
+
+tests/security/test_log_redaction.py ..........                          [ 90%]
+tests/security/test_smoke.py .                                           [100%]
+
+============================== 11 passed in 0.32s ==============================
+security check: ok
+No known vulnerabilities found
+Name          Skip Reason
+------------- ------------------------------------------------------------------------------
+aethermesh    Dependency not found on PyPI and could not be audited: aethermesh (0.1.0.dev0)
+liboqs-python Dependency not found on PyPI and could not be audited: liboqs-python (0.12.0)
+dependency audit: ok
+smoke test: ok
+smoke test: ok
+verify: ok
+Gate 2: placeholder PQ rejected in prod
+Gate 3: liboqs PQ accepted
+smoke test: ok
+Gate 4: interop matrix
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /app
+configfile: pyproject.toml
+plugins: hypothesis-6.156.1, cov-7.1.0, benchmark-5.2.3
+collected 1 item
+
+tests/interop/test_vectors_scaffold.py .                                 [100%]
+
+============================== 1 passed in 0.28s ===============================
+Gate 5: performance baseline
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0 -- /app/.venv/bin/python3
+cachedir: .pytest_cache
+hypothesis profile 'default'
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /app
+configfile: pyproject.toml
+plugins: hypothesis-6.156.1, cov-7.1.0, benchmark-5.2.3
+collecting ... collected 4 items
+
+tests/perf/test_l1_fast_lane.py::test_l1_fast_lane_p95 PASSED            [ 25%]
+tests/perf/test_l3_handshake.py::test_l3_handshake_p95 PASSED            [ 50%]
+tests/perf/test_l4_non_dh_step.py::test_l4_non_dh_step_ops PASSED        [ 75%]
+tests/perf/test_l5_captoken_verify.py::test_l5_verify_p99 PASSED         [100%]
+Wrote benchmark data in: <_io.BufferedWriter name='tests/perf/results/baseline.json'>
+
+
+
+--------------------------------------------------------------------------------------------------- benchmark: 4 tests ---------------------------------------------------------------------------------------------------
+Name (time in ns)                   Min                     Max                   Mean                 StdDev                 Median                   IQR            Outliers  OPS (Kops/s)            Rounds  Iterations
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+test_l1_fast_lane_p95          331.0001 (1.0)        8,535.0002 (1.0)         441.3554 (1.0)         650.4128 (1.0)         358.9998 (1.0)         32.0001 (1.0)          5;21    2,265.7475 (1.0)         256           1
+test_l4_non_dh_step_ops      1,909.9998 (5.77)      52,741.9998 (6.18)      2,316.0586 (5.25)      3,317.3049 (5.10)      1,974.0000 (5.50)        49.0002 (1.53)         8;41      431.7680 (0.19)        512           1
+test_l3_handshake_p95       11,830.9999 (35.74)     71,526.0003 (8.38)     13,573.6016 (30.75)     6,728.5632 (10.35)    12,141.5001 (33.82)      310.5001 (9.70)         3;18       73.6724 (0.03)        128           1
+test_l5_verify_p99          32,199.9996 (97.28)    135,133.0002 (15.83)    37,058.0117 (83.96)    11,718.5505 (18.02)    33,175.5002 (92.41)    3,175.0003 (99.22)       35;52       26.9847 (0.01)        512           1
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Legend:
+  Outliers: 1 Standard Deviation from Mean; 1.5 IQR (InterQuartile Range) from 1st Quartile and 3rd Quartile.
+  OPS: Operations Per Second, computed as 1 / Mean
+============================== 4 passed in 1.61s ===============================
+Gate 6: security tests
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /app
+configfile: pyproject.toml
+plugins: hypothesis-6.156.1, cov-7.1.0, benchmark-5.2.3
+collected 11 items
+
+tests/security/test_log_redaction.py ..........                          [ 90%]
+tests/security/test_smoke.py .                                           [100%]
+
+============================== 11 passed in 0.32s ==============================
+Gate 7: dependency audit
+No known vulnerabilities found
+Name          Skip Reason
+------------- ------------------------------------------------------------------------------
+aethermesh    Dependency not found on PyPI and could not be audited: aethermesh (0.1.0.dev0)
+liboqs-python Dependency not found on PyPI and could not be audited: liboqs-python (0.12.0)
+Gate 8: extended dependency audit
+No known vulnerabilities found
+Name          Skip Reason
+------------- ------------------------------------------------------------------------------
+aethermesh    Dependency not found on PyPI and could not be audited: aethermesh (0.1.0.dev0)
+liboqs-python Dependency not found on PyPI and could not be audited: liboqs-python (0.12.0)
+dependency audit: ok
+Gate 9: log redaction
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /app
+configfile: pyproject.toml
+plugins: hypothesis-6.156.1, cov-7.1.0, benchmark-5.2.3
+collected 10 items
+
+tests/security/test_log_redaction.py ..........                          [100%]
+
+============================== 10 passed in 0.31s ==============================
+Gate 10: node health
+Gate 11: no TODO/FIXME in protocol code
+fatal: ambiguous argument 'aethermesh/L1_sphinx': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+Gate 12: audit DB migrations sane
+audit db at schema v0 (behind target v1)
+Gate 13: dashboards parse
+Gate 14: alert rules parse
+production readiness: FAIL — promtool not installed

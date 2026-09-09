@@ -1,0 +1,13 @@
+Using CPython 3.12.13 interpreter at: /home/jules/.pyenv/versions/3.12.13/bin/python3
+Creating virtual environment at: .venv
+   Building aethermesh @ file:///app
+   Updating https://github.com/open-quantum-safe/liboqs-python.git (0.12.0)
+Downloading cryptography (4.5MiB)
+ Downloaded cryptography
+    Updated https://github.com/open-quantum-safe/liboqs-python.git (7906e7879a099fa34217035957d977314f99757d)
+   Building liboqs-python @ git+https://github.com/open-quantum-safe/liboqs-python.git@7906e7879a099fa34217035957d977314f99757d
+      Built aethermesh @ file:///app
+      Built liboqs-python @ git+https://github.com/open-quantum-safe/liboqs-python.git@7906e7879a099fa34217035957d977314f99757d
+Installed 6 packages in 26ms
+/app/.venv/bin/python: Error while finding module specification for 'aethermesh.demos.layer1' (ModuleNotFoundError: No module named 'aethermesh.demos')
+demos command failed because aethermesh.demos is not available. See aethermesh/cli/main.py or aethermesh/cli/demo.py (maybe it was moved to cli.demo?)

@@ -1,0 +1,29 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /app
+configfile: pyproject.toml
+plugins: hypothesis-6.156.1, cov-7.1.0, benchmark-5.2.3
+collected 307 items
+
+tests/unit/L3/attestation/test_apple_sep.py ss....                       [  1%]
+tests/unit/L3/attestation/test_tpm2.py ss....                            [  3%]
+tests/unit/L3/test_handshake_stub.py ............                        [  7%]
+tests/unit/L4/test_ratchet_stub.py .....................                 [ 14%]
+tests/unit/L5/test_captoken_stub.py ......................               [ 21%]
+tests/unit/L5/verifier/test_branch_coverage.py ....................      [ 28%]
+tests/unit/cli/test_cli_units.py ......................................  [ 40%]
+tests/unit/common/test_aead.py ....................                      [ 47%]
+tests/unit/common/test_canonical.py .......................              [ 54%]
+tests/unit/common/test_constants.py ............                         [ 58%]
+tests/unit/common/test_did_resolver.py ..............                    [ 63%]
+tests/unit/common/test_errors.py ...............                         [ 68%]
+tests/unit/common/test_hashes.py ............................            [ 77%]
+tests/unit/common/test_pq_backend.py .....................               [ 84%]
+tests/unit/common/test_x25519.py .........                               [ 86%]
+tests/unit/test_placeholder.py .                                         [ 87%]
+tests/unit/tools/test_audit_db.py .......................                [ 94%]
+tests/unit/tools/test_keyring_serve.py ...........                       [ 98%]
+tests/unit/tools/test_tool_entrypoints.py .....                          [100%]
+
+======================== 303 passed, 4 skipped in 3.48s ========================

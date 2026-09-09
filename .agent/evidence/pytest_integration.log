@@ -1,0 +1,15 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /app
+configfile: pyproject.toml
+plugins: hypothesis-6.156.1, cov-7.1.0, benchmark-5.2.3
+collected 21 items
+
+tests/integration/keyring/test_unix_socket.py ....                       [ 19%]
+tests/integration/test_l3_l4_l5_roundtrip.py ...                         [ 33%]
+tests/integration/test_metrics_registry.py .........                     [ 76%]
+tests/integration/test_placeholder.py .                                  [ 80%]
+tests/integration/tools/test_audit_db_roundtrip.py ....                  [100%]
+
+============================== 21 passed in 0.95s ==============================
