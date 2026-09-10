@@ -1,0 +1,6 @@
+[32m=== AetherMesh L1 Demo (lane=fast) ===[0m
+L1 Sphinx: fixed 2048-byte packets over q-mix QUIC
+  [stub] Sphinx packet assembled (placeholder backend)
+  [stub] Fast-lane path via in-process simulator
+  [stub] Cover scheduler: 5 pps active, 1 pps idle
+[32m=== DONE ===[0m

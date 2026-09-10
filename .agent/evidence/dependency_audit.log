@@ -1,0 +1,10 @@
+Found 2 known vulnerabilities in 2 packages
+Name         Version ID              Fix Versions
+------------ ------- --------------- ------------
+cryptography 49.0.0  PYSEC-2026-3552 50.0.0
+pip          26.1.2  PYSEC-2026-3721 26.2
+
+Name          Skip Reason
+------------- ------------------------------------------------------------------------------
+aethermesh    Dependency not found on PyPI and could not be audited: aethermesh (0.1.0.dev0)
+liboqs-python Dependency not found on PyPI and could not be audited: liboqs-python (0.12.0)

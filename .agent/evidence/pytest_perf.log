@@ -1,0 +1,31 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0 -- /app/.venv/bin/python3
+cachedir: .pytest_cache
+hypothesis profile 'default'
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /app
+configfile: pyproject.toml
+plugins: hypothesis-6.156.1, cov-7.1.0, benchmark-5.2.3
+collecting ... collected 4 items
+
+tests/perf/test_l1_fast_lane.py::test_l1_fast_lane_p95 PASSED            [ 25%]
+tests/perf/test_l3_handshake.py::test_l3_handshake_p95 PASSED            [ 50%]
+tests/perf/test_l4_non_dh_step.py::test_l4_non_dh_step_ops PASSED        [ 75%]
+tests/perf/test_l5_captoken_verify.py::test_l5_verify_p99 PASSED         [100%]
+Wrote benchmark data in: <_io.BufferedWriter name='tests/perf/results/baseline.json'>
+
+
+
+--------------------------------------------------------------------------------------------------- benchmark: 4 tests ---------------------------------------------------------------------------------------------------
+Name (time in ns)                   Min                     Max                   Mean                 StdDev                 Median                   IQR            Outliers  OPS (Kops/s)            Rounds  Iterations
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+test_l1_fast_lane_p95          302.0000 (1.0)        2,438.9999 (1.0)         354.0352 (1.0)         153.7636 (1.0)         330.9999 (1.0)         12.5001 (1.0)          5;45    2,824.5783 (1.0)         256           1
+test_l4_non_dh_step_ops      1,953.9998 (6.47)      52,494.9999 (21.52)     2,280.5000 (6.44)      2,885.1546 (18.76)     2,030.9999 (6.14)        61.0000 (4.88)         6;37      438.5003 (0.16)        512           1
+test_l3_handshake_p95       11,922.0001 (39.48)     74,762.9999 (30.65)    13,854.0938 (39.13)     7,679.8221 (49.95)    12,121.5000 (36.62)      382.0001 (30.56)        5;19       72.1808 (0.03)        128           1
+test_l5_verify_p99          36,264.0001 (120.08)   127,975.0002 (52.47)    41,126.4062 (116.16)   11,196.3105 (72.82)    37,455.0001 (113.16)   2,036.0000 (162.88)      31;85       24.3153 (0.01)        512           1
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Legend:
+  Outliers: 1 Standard Deviation from Mean; 1.5 IQR (InterQuartile Range) from 1st Quartile and 3rd Quartile.
+  OPS: Operations Per Second, computed as 1 / Mean
+============================== 4 passed in 1.99s ===============================

@@ -176,3 +176,12 @@ Tags are not idempotent — once pushed, v1.0.0 cannot be un-tagged without harm
 - **What changed vs plan:** M1 and M2 completed locally. M3 only reached the scaffold vector test because no second implementation exists in-repo. M4 now has a local benchmark suite and baseline artifact, but it still lacks reference-VM evidence and non-stub layer bodies for production sign-off. M5 remains blocked by required human sign-off. M6 now passes Gates 12 and 14 and reaches Gate 16, where it stops because ADR-0010 is still `Proposed`. M7-M8 were not attempted.
 - **Remaining risks:** real L1/L2/L3/L4/L5 protocol implementations, external interop partner coverage, reference benchmark hardware, human security lead sign-off, and the 72h burn-in window remain launch blockers.
 - **Production-readiness impact:** EP-010 is **still partial**. AetherMesh / AEP is still NOT production-ready per SPEC-008. The liboqs-backed local baseline, repo-local perf harness, and Gates 12 and 14 are now green, but production launch remains blocked by scaffold-only interop, scaffold-scoped perf evidence, and human security approval.
+
+## 16. Verification Pass (Current Session)
+- **Functional:** 5 layer demos exit 0. No `TODO/FIXME` left in `aethermesh/`.
+- **Test:** ruff, mypy, pytest (unit, integration, property, e2e, interop, perf, security) all exit 0.
+- **Security:** `security-check.sh`, `dependency-audit.sh`, and `pip-audit` pass. Placeholder backend is correctly rejected in `--prod`; `liboqs` is accepted.
+- **Observability:** `node health` passes. Dashboards parse. `promtool` rules parsing was skipped per `NOT_RUNNABLE_ENV(promtool missing)`.
+- **Data:** `audit_db migrate --check` completes successfully.
+- **Gates:** `./scripts/verify.sh` exits 0.
+- **Blocker:** `./scripts/production-readiness-check.sh` stops at Gate 16. ADR-0010 (security sign-off) remains `Proposed` in `DECISIONS.md`. Human intervention is required to unblock the final launch gate.

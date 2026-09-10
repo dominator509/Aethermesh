@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/app/aethermesh/tools/audit_db.py", line 335, in <module>
+    _cli()
+  File "/app/aethermesh/tools/audit_db.py", line 328, in _cli
+    migrate(args.path, target=args.to, check=args.check)
+  File "/app/aethermesh/tools/audit_db.py", line 121, in migrate
+    conn = _connect(path)
+           ^^^^^^^^^^^^^^
+  File "/app/aethermesh/tools/audit_db.py", line 73, in _connect
+    conn = sqlite3.connect(path)
+           ^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: unable to open database file

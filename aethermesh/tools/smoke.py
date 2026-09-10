@@ -9,7 +9,7 @@ import sys
 
 def _liboqs_binding_available() -> bool:
     try:
-        import oqs  # type: ignore[import-not-found]
+        import oqs  # type: ignore[import-untyped]
     except ImportError:
         return False
     return hasattr(oqs, "KeyEncapsulation") and hasattr(oqs, "Signature")

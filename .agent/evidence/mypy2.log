@@ -1,0 +1,22 @@
+Collecting types-Pygments
+  Downloading types_pygments-2.21.0.20260819-py3-none-any.whl.metadata (2.2 kB)
+Collecting types-pexpect
+  Downloading types_pexpect-4.9.0.20260518-py3-none-any.whl.metadata (1.7 kB)
+Downloading types_pygments-2.21.0.20260819-py3-none-any.whl (29 kB)
+Downloading types_pexpect-4.9.0.20260518-py3-none-any.whl (17 kB)
+Installing collected packages: types-Pygments, types-pexpect
+
+Successfully installed types-Pygments-2.21.0.20260819 types-pexpect-4.9.0.20260518
+aethermesh/tools/smoke.py:12: error: Unused "type: ignore" comment  [unused-ignore]
+aethermesh/tools/smoke.py:12: error: Skipping analyzing "oqs": module is installed, but missing library stubs or py.typed marker  [import-untyped]
+aethermesh/tools/smoke.py:12: note: Error code "import-untyped" not covered by "type: ignore[import-not-found]" comment
+aethermesh/tools/keyring_serve.py:34: error: Unused "type: ignore" comment  [unused-ignore]
+aethermesh/common/pq_backend.py:58: error: Unused "type: ignore" comment  [unused-ignore]
+aethermesh/common/pq_backend.py:58: error: Skipping analyzing "oqs": module is installed, but missing library stubs or py.typed marker  [import-untyped]
+aethermesh/common/pq_backend.py:58: note: Error code "import-untyped" not covered by "type: ignore[import-not-found]" comment
+aethermesh/common/pq_backend.py:58: note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports
+Installing missing stub packages:
+/app/.venv/bin/python3 -m pip install types-Pygments types-pexpect
+
+
+Found 5 errors in 3 files (checked 103 source files)

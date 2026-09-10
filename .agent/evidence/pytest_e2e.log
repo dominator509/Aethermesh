@@ -1,0 +1,15 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /app
+configfile: pyproject.toml
+plugins: hypothesis-6.156.1, cov-7.1.0, benchmark-5.2.3
+collected 36 items
+
+tests/e2e/test_cli_exit_codes.py ........                                [ 22%]
+tests/e2e/test_cli_no_color.py .....                                     [ 36%]
+tests/e2e/test_cli_subcommands.py ................                       [ 80%]
+tests/e2e/test_health_endpoints.py ......                                [ 97%]
+tests/e2e/test_placeholder.py .                                          [100%]
+
+============================== 36 passed in 8.90s ==============================

@@ -1,0 +1,6 @@
+[32m=== AetherMesh L2 Demo (lane=fast) ===[0m
+L2 Discovery: capability-hashed DHT lookup
+  [stub] CapabilityDescriptor registered
+  [stub] Kademlia bucket-PIR lookup (local)
+  [stub] SphinxIntroBlock resolved
+[32m=== DONE ===[0m
