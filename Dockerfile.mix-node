@@ -3,7 +3,11 @@
 
 # ── Build stage ──
 FROM python:3.11-slim AS builder
-RUN pip install uv
+# git is required: uv sync must fetch the git-sourced liboqs-python dependency
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends git \
+    && rm -rf /var/lib/apt/lists/* \
+    && pip install uv
 WORKDIR /build
 COPY pyproject.toml uv.lock README.md ./
 COPY aethermesh/ aethermesh/
